@@ -3,7 +3,7 @@
 ![FA³ST Logo Dark](./misc/images/Fa3st_negativ.png/#gh-dark-mode-only "FA³ST Logo")
 Converts AAS JSON files created with/exported from AASX Package Explorer to a FA³ST-compatible version.
 
-| :warning: **AASX Package Explorer uses AAS meta model v2.x while FA³ST uses v3.x. Converting a model might cause information loss!**<br>  **This toool is still expertimental and might fail for complex AAS model!**
+| :warning: **AASX Package Explorer uses AAS meta model v2.x while FA³ST uses v3.x. Converting a model might cause information loss!**<br>  **This tool is still expertimental and might fail for complex AAS model!**
 |-----------------------------|
 
 ## Supported Version
