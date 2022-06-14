@@ -19,7 +19,7 @@ read -s
 echo "Replacing version numbers"
 mvn -B versions:set -DgenerateBackupPoms=false -DnewVersion=${VERSION}
 sed -i 's/<tag>HEAD<\/tag>/<tag>v'${VERSION}'<\/tag>/g' pom.xml
-sed -r -z 's/(package-explorer-converter-\s*\.jar)/package-explorer-converter-'${VERSION}'.jar/g' -i README.md
+sed -r -z 's/package-explorer-converter-\S+\.jar/package-explorer-converter-'${VERSION}'.jar/g' -i README.md
 mvn -B spotless:apply
 
 echo "Git add ."
