@@ -1,0 +1,32 @@
+*~
+*.autosave
+
+### IntelliJ ###
+*.iml
+.idea/
+out/
+
+### Netbeans ###
+**/nbproject/*
+**/nb-configuration.xml
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+s[0-9]*/
+
+### Maven ###
+target/
+
+*.jar
+**/.flattend-pom.xml
+**/.flattened-pom.xml
+/endpoint/opcua-prosys/PKI
+/documentation/third_party_licenses_report
+
+*.log
+
+### PKI Files OPC UA Endpoint
+*.pem
+*.der
