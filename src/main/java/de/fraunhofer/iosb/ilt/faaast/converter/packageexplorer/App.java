@@ -76,7 +76,8 @@ public class App implements Callable<Integer> {
     @Option(names = {
             "-m",
             "--merge"
-    }, description = "merge all AAS models into single file (only applicable if input contains multiple files)")
+    }, description = "merge all AAS models into a single file called '" + MERGE_FILE_NAME
+            + "' additionally to converting each file seperately (only applicable if input contains multiple files)")
     private boolean merge;
 
     public static void main(String[] args) throws ScriptException, DeserializationException, SerializationException {
@@ -206,11 +207,6 @@ public class App implements Callable<Integer> {
             }
         }
         LOGGER.info("Successfully converted [{}/{}] files", inputFiles.length - failures.size(), inputFiles.length);
-        if (failures.isEmpty()) {
-            if (merge && aass.size() > 1) {
-
-            }
-        }
         if (merge && failures.isEmpty() && aass.size() > 1) {
             File mergeFile = new File(output, MERGE_FILE_NAME);
             LOGGER.info("Merging files...");
