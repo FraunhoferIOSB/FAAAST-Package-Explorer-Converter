@@ -58,25 +58,25 @@ public class App implements Callable<Integer> {
     @Option(names = {
             "-i",
             "--input"
-    }, description = "input file or directory", required = true)
+    }, description = "Input file or directory", required = true)
     private File input = null;
 
     @Option(names = {
             "-o",
             "--output"
-    }, description = "output file or directory")
+    }, description = "Output file or directory")
     private File output = null;
 
     @Option(names = {
             "-d",
             "--debug"
-    }, description = "print additional debug information")
+    }, description = "Print additional debug information")
     private boolean debug;
 
     @Option(names = {
             "-m",
             "--merge"
-    }, description = "merge all AAS models into a single file called '" + MERGE_FILE_NAME
+    }, description = "Merge all AAS models into a single file called '" + MERGE_FILE_NAME
             + "' additionally to converting each file seperately (only applicable if input contains multiple files)")
     private boolean merge;
 
