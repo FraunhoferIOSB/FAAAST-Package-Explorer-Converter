@@ -7,6 +7,7 @@
     <packaging>jar</packaging>
     <name>package-explorer-converter</name>
     <description>Converter for AASX Package Explorer JSON files to be used with FA³ST</description>
+    <url>https://github.com/FraunhoferIOSB/FAAAST-Package-Explorer-Converter</url>
     <inceptionYear>2022</inceptionYear>
     <organization>
         <name>Fraunhofer IOSB</name>
