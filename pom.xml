@@ -27,6 +27,26 @@
             <organizationUrl>https://www.iosb.fraunhofer.de</organizationUrl>
         </developer>
     </developers>
+    <scm>
+        <connection>scm:git:git://github.com/FraunhoferIOSB/FAAAST-Package-Explorer-Converter.git</connection>
+        <developerConnection>scm:git:ssh://github.com:FraunhoferIOSB/FAAAST-Package-Explorer-Converter.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/FraunhoferIOSB/FAAAST-Package-Explorer-Converter/tree/main</url>
+    </scm>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/FraunhoferIOSB/FAAAST-Package-Explorer-Converter/issues</url>
+    </issueManagement>
+    <distributionManagement>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
     <properties>
         <aas.version>1.2.1</aas.version>
         <jackson.databind.version>2.13.3</jackson.databind.version>
