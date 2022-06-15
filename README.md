@@ -30,7 +30,7 @@ If no ouput file is provided, the output will be written to screen.
 Converting a single input file `data/model.json` to output file `data/model-converted.json`.
 
 ```sh
-java -jar package-explorer-converter-0.0.1-SNAPSHOT.jar -i data/model.json -o data/mode-converted.json
+java -jar package-explorer-converter-0.1.0.jar -i data/model.json -o data/mode-converted.json
 ```
 
 ### Example: Convert and merge multiple files
@@ -38,7 +38,7 @@ java -jar package-explorer-converter-0.0.1-SNAPSHOT.jar -i data/model.json -o da
 Assuming you have a folder `data` containing three files `model1.json`, `model2.json`, `model3.json`, this command generates the output files `output/model1.json`, `output/model2.json`, `output/model3.json`, and a file containing the merged result `output/merged.json`.
 
 ```sh
-java -jar package-explorer-converter-0.0.1-SNAPSHOT.jar -i data/ -o output/ --merge
+java -jar package-explorer-converter-0.1.0.jar -i data/ -o output/ --merge
 ```
 
 ## Contributors
