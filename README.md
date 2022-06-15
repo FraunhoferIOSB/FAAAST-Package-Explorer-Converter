@@ -12,13 +12,13 @@ The FA³ST Package Explorer Converter supports AAS JSON files created with/expor
 ## Usage
 
 ```
--i, --input=<inputFile>   Input file or directory (mandatory)
--o, --output=<outputFile> Output file or directory
--m, --merge               Merge all AAS models into a single file called 'merged.json' additionally to converting each
-			  file seperately (only applicable if input contains multiple files)
--d, --debug               Print additional debug information
--h, --help                Show this help message and exit.
--V, --version             Print version information and exit.
+-i, --input=<inputFile>         Input file or directory (mandatory)
+-o, --output=<outputFile>       Output file or directory
+-m, --merge                     Merge all AAS models into a single file called 'merged.json' additionally to converting each
+				file seperately (only applicable if input contains multiple files)
+-d, --debug                     Print additional debug information
+-h, --help                      Show this help message and exit.
+-V, --version                   Print version information and exit.
 ```
 
 If no ouput file is provided, the output will be written to screen.
