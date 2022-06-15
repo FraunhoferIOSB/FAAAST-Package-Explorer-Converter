@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.fraunhofer.iosb.ilt.faaast</groupId>
     <artifactId>package-explorer-converter</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
     <name>package-explorer-converter</name>
     <description>Converter for AASX Package Explorer JSON files to be used with FA³ST</description>
@@ -30,7 +30,7 @@
     <scm>
         <connection>scm:git:git://github.com/FraunhoferIOSB/FAAAST-Package-Explorer-Converter.git</connection>
         <developerConnection>scm:git:ssh://github.com:FraunhoferIOSB/FAAAST-Package-Explorer-Converter.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v0.1.0</tag>
         <url>https://github.com/FraunhoferIOSB/FAAAST-Package-Explorer-Converter/tree/main</url>
     </scm>
     <issueManagement>
@@ -56,8 +56,15 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.plugin.compiler.version>3.10.1</maven.plugin.compiler.version>
+        <maven.plugin.failsafe.version>3.0.0-M7</maven.plugin.failsafe.version>
+        <maven.plugin.gpg.version>3.0.1</maven.plugin.gpg.version>
+        <maven.plugin.javadoc.version>3.4.0</maven.plugin.javadoc.version>
+        <maven.plugin.nexus-staging.version>1.6.13</maven.plugin.nexus-staging.version>
+        <maven.plugin.owasp.version>7.1.1</maven.plugin.owasp.version>
+        <maven.plugin.release.version>2.5.3</maven.plugin.release.version>
         <maven.plugin.jacoco.version>0.8.8</maven.plugin.jacoco.version>
         <maven.plugin.shade.version>3.3.0</maven.plugin.shade.version>
+        <maven.plugin.source.version>3.2.1</maven.plugin.source.version>
         <picocli.version>4.6.3</picocli.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>1.7.36</slf4j.version>
