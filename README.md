@@ -11,6 +11,8 @@ The FA³ST Package Explorer Converter supports AAS JSON files created with/expor
 
 ## Usage
 
+[Downloaded latest version as precompiled JAR](https://search.maven.org/remote_content?g=de.fraunhofer.iosb.ilt.faaast&a=package-explorer-converter&v=LATEST)
+
 ```
 -i, --input=<inputFile>         Input file or directory (mandatory)
 -o, --output=<outputFile>       Output file or directory
