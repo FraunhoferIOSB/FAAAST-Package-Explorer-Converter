@@ -17,6 +17,7 @@ package de.fraunhofer.iosb.ilt.faaast.converter.packageexplorer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.jayway.jsonpath.Configuration;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,6 +72,7 @@ public class PackageExplorerConverter {
         flattenValueType();
         flattenOperationVariables();
         fixEmbeddedDataSpecificationDataType();
+        addMissingEmbeddedDataSpecificationType();
         if (LOGGER.isDebugEnabled()) {
             try {
                 LOGGER.debug(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(document.json()));
@@ -132,6 +135,39 @@ public class PackageExplorerConverter {
                 return "String";
             }
             return AasUtils.serializeEnumName(x.toString());
+        });
+    }
+
+
+    private void addMissingEmbeddedDataSpecificationType() {
+        document.map("$.conceptDescriptions[*].embeddedDataSpecifications", (node, config) -> {
+            StreamSupport.stream(((ArrayNode) node).spliterator(), false).forEach(x -> {
+                try {
+                    JsonNode dataSpecificationContent = x.get("dataSpecificationContent");
+                    if (dataSpecificationContent == null || dataSpecificationContent.isEmpty()) {
+                        return;
+                    }
+                    ObjectNode dataSpecification = (ObjectNode) dataSpecificationContent.get("dataSpecification");
+                    if (dataSpecification == null) {
+                        dataSpecification = ((ObjectNode) x).putObject("dataSpecification");
+                    }
+                    ArrayNode keys = (ArrayNode) dataSpecification.get("keys");
+                    if (keys == null) {
+                        keys = dataSpecification.putArray("keys");
+                    }
+                    if (keys.isEmpty()) {
+                        LOGGER.debug("Adding missing type information for embeddedDataSpecification in conceptDescription");
+                        keys.add(JsonNodeFactory.instance.objectNode()
+                                .put("idType", "Iri")
+                                .put("type", "GlobalReference")
+                                .put("value", "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/2/0"));
+                    }
+                }
+                catch (Exception e) {
+                    LOGGER.error("error while adding missing embeddedDataSpecification type", e);
+                }
+            });
+            return node;
         });
     }
 
