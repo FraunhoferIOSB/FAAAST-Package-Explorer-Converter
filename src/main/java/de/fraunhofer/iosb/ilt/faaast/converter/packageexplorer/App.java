@@ -105,6 +105,13 @@ public class App implements Callable<Integer> {
             }
         }
         else {
+            File path = outputFile.getParentFile();
+            if (path != null && !path.exists()) {
+                if (!path.mkdirs()) {
+                    LOGGER.error("path '{}' could not be created", path);
+                    return false;
+                }
+            }
             try {
                 new JsonSerializer().write(outputFile, env);
             }
@@ -169,17 +176,9 @@ public class App implements Callable<Integer> {
                 inputFiles.length,
                 System.lineSeparator(),
                 Stream.of(inputFiles).map(x -> x.getName()).collect(Collectors.joining(System.lineSeparator())));
-        if (output != null) {
-            if (!output.exists()) {
-                if (!output.mkdirs()) {
-                    LOGGER.error("output directory '{}' could not be created", output);
-                    return 1;
-                }
-            }
-            if (!output.isDirectory()) {
-                LOGGER.error("Output is not a directory! When using batch mode, output must be a directory or be omitted");
-                return 1;
-            }
+        if (output != null && output.isFile()) {
+            LOGGER.error("Output is not a directory! When using batch mode, output must be a directory or be omitted");
+            return 1;
         }
         List<File> failures = new ArrayList<>();
         List<AssetAdministrationShellEnvironment> aass = new ArrayList<>();
