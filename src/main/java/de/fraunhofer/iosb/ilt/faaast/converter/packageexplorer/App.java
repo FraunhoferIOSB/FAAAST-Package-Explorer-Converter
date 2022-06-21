@@ -90,7 +90,7 @@ public class App implements Callable<Integer> {
         if (merge) {
             LOGGER.warn("Merging not supported when converting single file - command will be ignored");
         }
-        return convert(input, output) != null ? 1 : 0;
+        return convert(input, output) != null ? 0 : 1;
     }
 
 
