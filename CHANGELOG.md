@@ -5,6 +5,9 @@
 **New Features**
 * replaces non-standard-conformant idTypes with default (IRI)
 
+**Internal changes & Bugfixes**
+* Fixed handling idType ID_SHORT
+
 ## Release version 0.2.0
 
 **New Features**

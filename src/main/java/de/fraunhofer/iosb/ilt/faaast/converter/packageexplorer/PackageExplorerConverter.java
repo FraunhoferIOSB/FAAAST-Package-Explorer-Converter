@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -131,12 +132,19 @@ public class PackageExplorerConverter {
 
 
     private String transformIdTye(String idType) {
-        final String result = AasUtils.serializeEnumName(idType);
-        if (!Stream.of(KeyType.values()).anyMatch(x -> x.toString().equalsIgnoreCase(result))) {
-            LOGGER.warn("found invalid idType '{}', replacing it with default ({})", idType, DEFAULT_KEY_TYPE.name());
-            return AasUtils.serializeEnumName(DEFAULT_KEY_TYPE.name());
+        Optional<KeyType> keyType = Stream.of(KeyType.values())
+                .filter(x -> normalize(x.name()).equals(normalize(idType)))
+                .findFirst();
+        if (keyType.isPresent()) {
+            return AasUtils.serializeEnumName(keyType.get().name());
         }
-        return result;
+        LOGGER.warn("found invalid idType '{}', replacing it with default ({})", idType, DEFAULT_KEY_TYPE.name());
+        return AasUtils.serializeEnumName(DEFAULT_KEY_TYPE.name());
+    }
+
+
+    private static String normalize(String input) {
+        return input.toLowerCase().replace("_", "");
     }
 
 
