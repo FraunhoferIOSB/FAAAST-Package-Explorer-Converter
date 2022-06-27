@@ -28,6 +28,7 @@ import com.jayway.jsonpath.TypeRef;
 import com.jayway.jsonpath.spi.json.JacksonJsonNodeJsonProvider;
 import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
 import io.adminshell.aas.v3.dataformat.core.util.AasUtils;
+import io.adminshell.aas.v3.model.KeyType;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -35,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +47,7 @@ public class PackageExplorerConverter {
     private static final Logger LOGGER = LoggerFactory.getLogger(PackageExplorerConverter.class);
     private static final TypeRef<List<ObjectNode>> TYPE_OBJECT_NODE_LIST = new TypeRef<List<ObjectNode>>() {};
     private static final TypeRef<List<JsonNode>> TYPE_JSON_NODE_LIST = new TypeRef<List<JsonNode>>() {};
+    private static final KeyType DEFAULT_KEY_TYPE = KeyType.IRI;
     private final DocumentContext document;
 
     private PackageExplorerConverter(InputStream input) {
@@ -122,8 +125,18 @@ public class PackageExplorerConverter {
 
     private void capitalizeEnumValues() {
         LOGGER.debug("Adjusting values for 'idType' and 'category' (FA³ST-specific)");
-        document.map("$..idType", (x, config) -> AasUtils.serializeEnumName(x.toString()));
+        document.map("$..idType", (x, config) -> transformIdTye(x.toString()));
         document.map("$..category", (x, config) -> AasUtils.serializeEnumName(x.toString()));
+    }
+
+
+    private String transformIdTye(String idType) {
+        final String result = AasUtils.serializeEnumName(idType);
+        if (!Stream.of(KeyType.values()).anyMatch(x -> x.toString().equalsIgnoreCase(result))) {
+            LOGGER.warn("found invalid idType '{}', replacing it with default ({})", idType, DEFAULT_KEY_TYPE.name());
+            return AasUtils.serializeEnumName(DEFAULT_KEY_TYPE.name());
+        }
+        return result;
     }
 
 

@@ -1,6 +1,11 @@
 # Changelog
 
-## Current development version (0.2.0-SNAPSHOT)
+## Current development version (0.3.0-SNAPSHOT)
+
+**New Features**
+* replaces non-standard-conformant idTypes with default (IRI)
+
+## Release version 0.2.0
 
 **New Features**
 * add additional transformation to fix embedded data specifications with missing type information
