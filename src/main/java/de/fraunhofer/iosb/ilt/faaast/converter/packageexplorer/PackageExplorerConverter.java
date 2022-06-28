@@ -71,6 +71,7 @@ public class PackageExplorerConverter {
         removeEmptyKeys();
         removeKeyIndex();
         removeKeyLocal();
+        removeViews();
         capitalizeEnumValues();
         transformAssets();
         flattenValueType();
@@ -121,6 +122,11 @@ public class PackageExplorerConverter {
 
     private void removeKeyLocal() {
         delete("$..keys[*].local", x -> String.format("Removed key.local (because removed in AAS v3.0)"), false);
+    }
+
+
+    private void removeViews() {
+        delete("$.assetAdministrationShells[*].views", x -> String.format("Removed views (because removed in AAS v3.0)"), false);
     }
 
 
