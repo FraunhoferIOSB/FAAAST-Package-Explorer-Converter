@@ -4,6 +4,7 @@
 
 **New Features**
 * replaces non-standard-conformant idTypes with default (IRI)
+* removes View elements if present
 
 **Internal changes & Bugfixes**
 * Fixed handling idType ID_SHORT
