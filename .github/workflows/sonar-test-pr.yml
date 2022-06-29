@@ -11,12 +11,23 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-    - name: Test with Sonar
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-        mvn -B verify -P coverage sonar:sonar -Dsonar.projectKey=FraunhoferIOSB_FAAAST-Package-Explorer-Converter -Dmaven.javadoc.skip=true
+      - uses: actions/checkout@v3
+        with: ${{ github.event.workflow_run.head_branch }}
+      - name: machine echo $GITHUB_EVENT_PATH
+        run: "echo $GITHUB_EVENT_PATH"
+      - name: machine echo $GITHUB_WORKSPACE
+        run: "echo $GITHUB_WORKSPACE"
+      - name: machine echo $HOME
+        run: "echo $HOME"
+      - name: machine ls $HOME
+        working-directory: "."
+        run: "ls -la $HOME"
+      - name: Test with Sonar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify -P coverage sonar:sonar -Dsonar.projectKey=FraunhoferIOSB_FAAAST-Package-Explorer-Converter -Dmaven.javadoc.skip=true
 
   on-failure:
     runs-on: ubuntu-latest
