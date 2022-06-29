@@ -43,6 +43,8 @@ Assuming you have a folder `data` containing three files `model1.json`, `model2.
 java -jar package-explorer-converter-0.2.0.jar -i data/ -o output/ --merge
 ```
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ## Contributors
 
 | Name | Github Account |
