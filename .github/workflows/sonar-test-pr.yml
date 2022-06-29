@@ -15,8 +15,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-        ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
       run: |
         mvn -B verify --settings maven-ci-settings.xml -P coverage sonar:sonar -Dsonar.projectKey=FraunhoferIOSB_FAAAST-Service -Dmaven.javadoc.skip=true
 

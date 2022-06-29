@@ -35,8 +35,5 @@ jobs:
         java-version: 11
 
     - name: Build with Maven
-      env:
-        ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-        ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
       run: |
-        mvn -B install --settings maven-ci-settings.xml -P ci-build -Dmaven.javadoc.skip=true
+        mvn -B install -Dmaven.javadoc.skip=true
