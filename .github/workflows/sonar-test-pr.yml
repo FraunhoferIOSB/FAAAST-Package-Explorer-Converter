@@ -1,0 +1,25 @@
+name: Maven Pull Request Sonar Test
+
+on:
+  workflow_run:
+    workflows: [Maven Pull Request Build]
+    types:
+      - completed
+
+jobs:
+  on-success:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+    - name: Test with Sonar
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        mvn -B verify --settings maven-ci-settings.xml -P coverage sonar:sonar -Dsonar.projectKey=FraunhoferIOSB_FAAAST-Service -Dmaven.javadoc.skip=true
+
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo 'The triggering workflow failed'
