@@ -18,7 +18,9 @@ jobs:
       - name: machine echo $GITHUB_EVENT_PATH
         run: "echo $GITHUB_EVENT_PATH"
       - name: machine echo $GITHUB_WORKSPACE
-        run: "echo $GITHUB_WORKSPACE"
+        run: |
+          "echo $GITHUB_WORKSPACE"
+          "echo ls $GITHUB_WORKSPACE"
       - name: machine echo $HOME
         run: "echo $HOME"
       - name: machine ls $HOME
