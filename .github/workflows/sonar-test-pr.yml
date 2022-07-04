@@ -13,9 +13,11 @@ jobs:
     steps:
       - name: Debug Print
         run: echo "$GITHUB_CONTEXT"
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
       - uses: actions/checkout@v3
-        with:
-          ref: '${{ github.event.workflow_run.head_branch }}'
+          with:
+            ref: '${{ github.event.workflow_run.head_branch }}'
       - name: Test with Sonar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
