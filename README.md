@@ -1,6 +1,10 @@
 # FA³ST Package Explorer Converter
-![FA³ST Logo Light](./misc/images/Fa3st_positiv.png/#gh-light-mode-only "FA³ST Logo")
-![FA³ST Logo Dark](./misc/images/Fa3st_negativ.png/#gh-dark-mode-only "FA³ST Logo")
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="./misc/images/Fa3st_negativ.png">
+<source media="(prefers-color-scheme: light)" srcset="./misc/images/Fa3st_positiv.png/">
+<img alt="Shows the FA³ST Logo" src="./misc/images/Fa3st_negativ.png">
+</picture>
+
 Converts AAS JSON files created with/exported from AASX Package Explorer to a FA³ST-compatible version.
 
 | :warning: **AASX Package Explorer uses AAS meta model v2.x while FA³ST uses v3.x. Converting a model might cause information loss!**<br>  **This tool is still expertimental and might fail for complex AAS model!**
@@ -42,6 +46,8 @@ Assuming you have a folder `data` containing three files `model1.json`, `model2.
 ```sh
 java -jar package-explorer-converter-0.2.0.jar -i data/ -o output/ --merge
 ```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Contributors
 
