@@ -15,11 +15,12 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
+          
+      - uses: actions/checkout@v3
+        with:
+            ref: '${{ github.event.workflow_run.head_branch }}'
 
       - name: Test with Sonar
-        uses: actions/checkout@v3
-          with:
-            ref: '${{ github.event.workflow_run.head_branch }}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
