@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - name: Debug Print
+        run: echo '{{ github }}'
       - uses: actions/checkout@v3
         with:
           ref: '${{ github.event.workflow_run.head_branch }}'
@@ -26,3 +28,4 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
       - run: echo 'The triggering workflow failed'
+      
