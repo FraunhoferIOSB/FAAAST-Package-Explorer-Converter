@@ -29,7 +29,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn -B verify -P coverage sonar:sonar -Dsonar.projectKey=FraunhoferIOSB_FAAAST-Package-Explorer-Converter -Dmaven.javadoc.skip=true
+          mvn -B verify -P coverage sonar:sonar
+          -Dsonar.projectKey=FraunhoferIOSB_FAAAST-Package-Explorer-Converter
+          -Dsonar.pullrequest.key=10
+          -Dsonar.pullrequest.branch='${{ github.event.workflow_run.head_branch }}'
+          -Dmaven.javadoc.skip=true
 
   on-failure:
     runs-on: ubuntu-latest
