@@ -13,6 +13,7 @@ Converts AAS JSON files created with/exported from AASX Package Explorer to a FA
 ## Supported Version
 The FA³ST Package Explorer Converter supports AAS JSON files created with/exported from AASX Package Explorer with version `AASX Package Explorer 2022-05-10.alpha`.
 
+
 ## Usage
 
 [Downloaded latest version as precompiled JAR](https://search.maven.org/remote_content?g=de.fraunhofer.iosb.ilt.faaast&a=package-explorer-converter&v=LATEST)
