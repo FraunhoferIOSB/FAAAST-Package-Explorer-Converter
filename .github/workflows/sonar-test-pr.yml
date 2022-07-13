@@ -40,6 +40,7 @@ jobs:
           -Dsonar.projectKey=FraunhoferIOSB_FAAAST-Package-Explorer-Converter
           -Dsonar.pullrequest.key='${{ steps.fetch.outputs.pr-number }}'
           -Dsonar.pullrequest.branch='${{ github.event.workflow_run.head_branch }}'
+          -Dsonar.scm.revision=${{ github.event.workflow_run.head_sha }}
           -Dmaven.javadoc.skip=true
 
   on-failure:
