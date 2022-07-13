@@ -63,6 +63,11 @@ public class PackageExplorerConverter_Copy {
     }
 
 
+    public static InputStream toFurious(InputStream input) {
+        return new PackageExplorerConverter_Copy(input).convert();
+    }
+
+
     private ByteArrayInputStream convert() {
         removeEmptyKeys();
         removeKeyIndex();
