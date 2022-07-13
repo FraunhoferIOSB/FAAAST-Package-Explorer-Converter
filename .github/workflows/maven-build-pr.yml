@@ -45,5 +45,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
         ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-      run: |
-        mvn -B verify -P coverage sonar:sonar -Dsonar.projectKey=FraunhoferIOSB_FAAAST-Package-Explorer-Converter -Dmaven.javadoc.skip=true
+      run: >
+        mvn -B verify -P coverage sonar:sonar
+        -Dsonar.projectKey=FraunhoferIOSB_FAAAST-Package-Explorer-Converter
+        -Dmaven.javadoc.skip=true
