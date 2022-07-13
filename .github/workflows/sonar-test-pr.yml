@@ -11,14 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.fork == true }}
     steps:
-      - name: Debug Print GitHub Context
-        run: echo "$GITHUB_CONTEXT"
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-          
-      - name: Debug Print Github Event
-        run: echo '${{ github.event.workflow_run.event }}'
-
       - name: Fetch PR number
         id: fetch
         uses: chrweiss/pull-request-number-action@v0.2
