@@ -76,6 +76,7 @@ public class PackageExplorerConverter {
         transformAssets();
         flattenValueType();
         flattenOperationVariables();
+        flattenMultiLanguagePropertyValue();
         fixEmbeddedDataSpecificationDataType();
         addMissingEmbeddedDataSpecificationType();
         if (LOGGER.isDebugEnabled()) {
@@ -236,6 +237,15 @@ public class PackageExplorerConverter {
         document.map("$..valueType[?(@.dataObjectType)]", (x, config) -> {
             ObjectNode node = (ObjectNode) x;
             return JsonNodeFactory.instance.textNode(node.at("/dataObjectType/name").asText().toLowerCase());
+        });
+    }
+
+
+    private void flattenMultiLanguagePropertyValue() {
+        LOGGER.debug("Flattening MultiLanguageProperty.value structure (because package explorer-specific)");
+        document.map("$..value[?(@.langString)]", (x, config) -> {
+            ObjectNode node = (ObjectNode) x;
+            return node.get("langString");
         });
     }
 
