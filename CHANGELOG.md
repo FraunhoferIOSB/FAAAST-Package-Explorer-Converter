@@ -9,6 +9,7 @@
 
 **Internal changes & Bugfixes**
 * Fixed handling idType ID_SHORT
+* Now correctly sets type of Reference for globalAssetId in assetInformation
 
 ## Release version 0.2.0
 
