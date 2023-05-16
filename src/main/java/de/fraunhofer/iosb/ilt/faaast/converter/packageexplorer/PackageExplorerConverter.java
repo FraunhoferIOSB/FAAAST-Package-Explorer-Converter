@@ -225,8 +225,8 @@ public class PackageExplorerConverter {
                     .putArray("keys")
                     .addObject()
                     .put("value", id)
-                    .put("type",  "Asset")
-                    .set("idType", node.at("/asset/keys/0/idType"))                    ;
+                    .put("type", "Asset")
+                    .set("idType", node.at("/asset/keys/0/idType"));
             node.remove("asset");
             return node;
         });
