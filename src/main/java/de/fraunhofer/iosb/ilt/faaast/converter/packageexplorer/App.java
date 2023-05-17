@@ -30,7 +30,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -143,7 +142,7 @@ public class App implements Callable<Integer> {
             LOGGER.info("Converting file...");
             String converted = "";
             try {
-                converted = new String(PackageExplorerConverter.toFaaast(new FileInputStream(inputFile)).readAllBytes(), StandardCharsets.UTF_8);
+                converted = new String(PackageExplorerConverter.toFaaast(new FileInputStream(inputFile)).readAllBytes());
             }
             catch (FileNotFoundException e) {
                 LOGGER.error("Input file not found", e);

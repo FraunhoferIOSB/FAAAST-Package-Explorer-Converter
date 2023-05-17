@@ -2,6 +2,11 @@
 
 ## Current development version (0.4.0-SNAPSHOT)
 
+**Internal changes & Bugfixes**
+* Converting now properly keeps file encoding
+* Adjusted for undocumented change in functionality in JSONPath library when updating from 2.7.0 to 2.8.0
+
+
 ## Release version 0.3.1
 
 **Internal changes & Bugfixes**

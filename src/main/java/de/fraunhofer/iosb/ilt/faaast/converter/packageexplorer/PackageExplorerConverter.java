@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -49,6 +50,7 @@ public class PackageExplorerConverter {
     private static final TypeRef<List<ObjectNode>> TYPE_OBJECT_NODE_LIST = new TypeRef<List<ObjectNode>>() {};
     private static final TypeRef<List<JsonNode>> TYPE_JSON_NODE_LIST = new TypeRef<List<JsonNode>>() {};
     private static final KeyType DEFAULT_KEY_TYPE = KeyType.IRI;
+    private static final String DEFAULT_DATATYPE = "String";
     private final DocumentContext document;
 
     private PackageExplorerConverter(InputStream input) {
@@ -133,8 +135,8 @@ public class PackageExplorerConverter {
 
     private void capitalizeEnumValues() {
         LOGGER.debug("Adjusting values for 'idType' and 'category' (FA³ST-specific)");
-        document.map("$..idType", (x, config) -> transformIdTye(x.toString()));
-        document.map("$..category", (x, config) -> AasUtils.serializeEnumName(x.toString()));
+        mapAsString("$..idType", this::transformIdTye);
+        mapAsString("$..category", AasUtils::serializeEnumName);
     }
 
 
@@ -157,22 +159,18 @@ public class PackageExplorerConverter {
 
     private void fixEmbeddedDataSpecificationDataType() {
         LOGGER.debug("Adjusting values for 'dataType' inside embeddedDataSpecifications (FA³ST-specific)");
-        document.map("$..embeddedDataSpecifications[*]..dataType", (x, config) -> {
-            String datatype = x.toString();
-            if (datatype.startsWith("\"") && datatype.endsWith("\"")) {
-                datatype = datatype.substring(1, datatype.length() - 1);
-            }
-            if (datatype.isBlank()) {
+        mapAsString("$..embeddedDataSpecifications[*]..dataType", x -> {
+            if (x.isBlank()) {
                 LOGGER.warn("Found embeddedDataSpecification with missing datatype property - setting to 'String' (default)");
-                return "String";
+                return DEFAULT_DATATYPE;
             }
-            return AasUtils.serializeEnumName(datatype);
+            return AasUtils.serializeEnumName(x);
         });
     }
 
 
     private void addMissingEmbeddedDataSpecificationType() {
-        document.map("$.conceptDescriptions[*].embeddedDataSpecifications", (node, config) -> {
+        map("$.conceptDescriptions[*].embeddedDataSpecifications", node -> {
             StreamSupport.stream(((ArrayNode) node).spliterator(), false).forEach(x -> {
                 try {
                     JsonNode dataSpecificationContent = x.get("dataSpecificationContent");
@@ -219,10 +217,10 @@ public class PackageExplorerConverter {
                             x -> x.get("kind").asText()));
             document.delete("$.assets");
         }
-        document.map("$.assetAdministrationShells[?(@.asset)]", (x, config) -> {
+        map("$.assetAdministrationShells[?(@.asset)]", x -> {
             ObjectNode node = (ObjectNode) x;
             ObjectNode nodeAssetInformation = node.putObject("assetInformation");
-            String id = node.at("/asset/keys/0/value").asText();
+            String id = node.at("/asset/keys/0/value").textValue();
             nodeAssetInformation.put("assetKind", assetKinds.containsKey(id) ? assetKinds.get(id) : "Instance");
             nodeAssetInformation
                     .putObject("globalAssetId")
@@ -239,27 +237,49 @@ public class PackageExplorerConverter {
 
     private void flattenValueType() {
         LOGGER.debug("Flattening valueType structure (because package explorer-specific)");
-        document.map("$..valueType[?(@.dataObjectType)]", (x, config) -> {
-            ObjectNode node = (ObjectNode) x;
-            return JsonNodeFactory.instance.textNode(node.at("/dataObjectType/name").asText().toLowerCase());
-        });
+        unwrap("$..valueType[?(@.dataObjectType)]",
+                x -> JsonNodeFactory.instance.textNode(x.at("/dataObjectType/name").textValue().toLowerCase()));
     }
 
 
     private void flattenMultiLanguagePropertyValue() {
         LOGGER.debug("Flattening MultiLanguageProperty.value structure (because package explorer-specific)");
-        document.map("$..value[?(@.langString)]", (x, config) -> {
-            ObjectNode node = (ObjectNode) x;
-            return node.get("langString");
-        });
+        unwrap("$..value[?(@.langString)]", x -> x.get("langString"));
     }
 
 
     private void flattenOperationVariables() {
         LOGGER.debug("Flattening operation variable structure (because package explorer-specific)");
-        document.map("$..value[?(@.submodelElement)]", (x, config) -> {
-            ObjectNode node = (ObjectNode) x;
-            return node.elements().next();
-        });
+        unwrap("$..value[?(@.submodelElement)]", x -> x.elements().next());
     }
+
+
+    private void map(String jsonPathExpression, Function<JsonNode, Object> function) {
+        document.map(jsonPathExpression,
+                (x, config) -> {
+                    if (Objects.nonNull(x) && JsonNode.class.isAssignableFrom(x.getClass())) {
+                        return function.apply((JsonNode) x);
+                    }
+                    LOGGER.debug("unable to map element as it is no JsonNode (element: {}, found by jsonPath expression: {})", x, jsonPathExpression);
+                    return x;
+                });
+    }
+
+
+    private void mapAsString(String jsonPathExpression, Function<String, String> function) {
+        map(jsonPathExpression, x -> function.apply(x.textValue()));
+    }
+
+
+    private void unwrap(String jsonPathExpression, Function<ObjectNode, JsonNode> function) {
+        document.map(jsonPathExpression,
+                (x, config) -> {
+                    if (Objects.nonNull(x) && ObjectNode.class.isAssignableFrom(x.getClass())) {
+                        return function.apply((ObjectNode) x);
+                    }
+                    LOGGER.debug("unable to map element as it is no ObjectNode (element: {}, found by jsonPath expression: {})", x, jsonPathExpression);
+                    return x;
+                });
+    }
+
 }
