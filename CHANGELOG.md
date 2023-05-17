@@ -1,5 +1,11 @@
 # Changelog
 
+## Current development version (0.4.0-SNAPSHOT)
+
+**Internal changes & Bugfixes**
+* Fixed error that could occur when adjusting capitalization of dataSpecificationContent.dataType is required
+* remove package name from console output
+
 ## Release version 0.3.0
 
 **New Features**

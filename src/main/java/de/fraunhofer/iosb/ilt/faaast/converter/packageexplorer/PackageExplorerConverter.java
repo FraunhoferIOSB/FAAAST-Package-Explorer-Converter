@@ -158,11 +158,15 @@ public class PackageExplorerConverter {
     private void fixEmbeddedDataSpecificationDataType() {
         LOGGER.debug("Adjusting values for 'dataType' inside embeddedDataSpecifications (FA³ST-specific)");
         document.map("$..embeddedDataSpecifications[*]..dataType", (x, config) -> {
-            if (x.toString().isBlank()) {
+            String datatype = x.toString();
+            if (datatype.startsWith("\"") && datatype.endsWith("\"")) {
+                datatype = datatype.substring(1, datatype.length() - 1);
+            }
+            if (datatype.isBlank()) {
                 LOGGER.warn("Found embeddedDataSpecification with missing datatype property - setting to 'String' (default)");
                 return "String";
             }
-            return AasUtils.serializeEnumName(x.toString());
+            return AasUtils.serializeEnumName(datatype);
         });
     }
 

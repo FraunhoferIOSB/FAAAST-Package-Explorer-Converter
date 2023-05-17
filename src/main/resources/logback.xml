@@ -12,7 +12,7 @@
     </appender>
     <appender name="STDOUT_WARN_ERROR" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%date{yyyy-MM-dd HH:mm:ss} [%level] %msg \(%logger\)%n</pattern>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss} [%level] %msg%n</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>WARN</level>
