@@ -1,6 +1,6 @@
 # Changelog
 
-## Current development version (0.4.0-SNAPSHOT)
+## Release version 0.4.0
 
 **Internal changes & Bugfixes**
 * Converting now properly keeps file encoding
