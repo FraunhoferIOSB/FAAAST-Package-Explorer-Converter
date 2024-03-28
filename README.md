@@ -7,8 +7,9 @@
 
 Converts AAS JSON files created with/exported from AASX Package Explorer to a FA³ST-compatible version.
 
-| :warning: **AASX Package Explorer uses AAS meta model v2.x while FA³ST uses v3.x. Converting a model might cause information loss!**<br>  **This tool is still expertimental and might fail for complex AAS model!**
-|-----------------------------|
+> [!WARNING]
+> This project is no longer maintained as it was developed for the sole purpose to convert AAS model files create with AASP Package Explorer so that they can be used with FA³ST Service.
+> Since v1.0.0, FA³ST Service is now working out-of-the-box with files created by AASX Package Explorer and this tool is no longer needed.
 
 ## Supported Version
 The FA³ST Package Explorer Converter supports AAS JSON files created with/exported from AASX Package Explorer with version `AASX Package Explorer 2022-05-10.alpha`.
